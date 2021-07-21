@@ -1,3 +1,5 @@
+#SingleInstance, Force
+
 WaitForImage(img, timeout, byref foundX, byref foundY)
 {	
 	WinGetActiveStats, tmp0, winW, winH, _, _
@@ -13,9 +15,18 @@ WaitForImage(img, timeout, byref foundX, byref foundY)
 	return false
 }
 
+hzdPath := "E:\Games\SteamLibrary\steamapps\common\Horizon Zero Dawn\HorizonZeroDawn.exe"
+SplitPath, hzdPath ,, hzdDir
+
+if (A_Args.Length() > 0) {
+	hzdPath := A_Args[1]
+}
+if (A_Args.Length() > 1) {
+	hzdDir := A_Args[2]
+}
+
 ;Start hzd
-Msgbox %1%
-Run, %1%, %2%
+Run, %hzdPath%, %hzdDir%
 
 ;Wait for menu
 WinWait, ahk_exe HorizonZeroDawn.exe
@@ -42,6 +53,11 @@ Sleep, 50
 Send {Space up}
 Sleep, 2000
 
+if (%0% < 2) {
+	msgbox, Finished run-hzd
+	Exit, 0
+}
+
 ;game menu
 Send {Esc down}
 Sleep, 50
@@ -62,7 +78,7 @@ Send {Enter up}
 Sleep, 100
 
 Sleep, 500
-RunWait, arrange-photo.ahk
+RunWait, arrange-photo.ahk -nowait
 
 Sleep, 500
 Send {f down}

@@ -1,4 +1,6 @@
 SetWorkingDir %A_ScriptDir%
+#SingleInstance, Force
+#Include common.ahk
 
 progressFile := "..\curr.txt"
 hzdScreens := % A_MyDocuments . "\Horizon Zero Dawn\Screenshots"
@@ -43,23 +45,25 @@ if (progress = "") {
 }
 
 i := progress
-
-;apply patch
-RunWait, %aaPath% --patch --cmd "Misc" i "Outfits" s%i%, %aaDir%
-
-Sleep, 500
-
-;take screen
-RunWait, hzd-run-photo.ahk "%hzdPath%" "%hzdDir%"
-
-
-exit
-
 Loop, % totalOutfits - progress {
+	;apply patch
+	RunWait, %aaPath% --patch --cmd "Misc" i "Outfits" s%i%, %aaDir%
 
+	Sleep, 500
 
+	;take screen
+	RunWait, run-hzd.ahk "%hzdPath%" "%hzdDir%"
 
+	;copy screen
+	Loop, %hzdScreens%\* {
+		FileCreateDir, ..\db
+		FileMove, %A_LoopFilePath%, % "..\db\" . ReadModelName() . ".png", 1
+	}
+
+	FileDelete, %hzdScreens%\*
 
 	WriteProgress(i)
 	i++
+	
+	Sleep, 2000
 }
