@@ -14,6 +14,7 @@ WaitForImage(img, timeout, byref foundX, byref foundY)
 }
 
 ;Start hzd
+Msgbox %1%
 Run, %1%, %2%
 
 ;Wait for menu
@@ -61,7 +62,7 @@ Send {Enter up}
 Sleep, 100
 
 Sleep, 500
-RunWait, setup-photo.ahk
+RunWait, arrange-photo.ahk
 
 Sleep, 500
 Send {f down}

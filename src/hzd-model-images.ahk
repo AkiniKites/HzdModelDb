@@ -44,8 +44,13 @@ if (progress = "") {
 
 i := progress
 
-RunWait, %aaPath% --patch --cmd "Outfits" s%i%, %aaDir%
-MsgBox, % ReadModelName()
+;apply patch
+RunWait, %aaPath% --patch --cmd "Misc" i "Outfits" s%i%, %aaDir%
+
+Sleep, 500
+
+;take screen
+RunWait, hzd-run-photo.ahk "%hzdPath%" "%hzdDir%"
 
 
 exit
