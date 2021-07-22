@@ -1,19 +1,5 @@
 #SingleInstance, Force
-
-WaitForImage(img, timeout, byref foundX, byref foundY)
-{	
-	WinGetActiveStats, tmp0, winW, winH, _, _
-	
-	loop % timeout / 200
-	{
-		ImageSearch, foundX, foundY, 0, 0, winW, winH, *50 %img%
-		if (ErrorLevel = 0) {
-			return true
-		}
-		Sleep, 200
-	}
-	return false
-}
+#include common.ahk
 
 hzdPath := "E:\Games\SteamLibrary\steamapps\common\Horizon Zero Dawn\HorizonZeroDawn.exe"
 SplitPath, hzdPath ,, hzdDir
