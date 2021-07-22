@@ -15,23 +15,23 @@ SplitPath, aaPath ,, aaDir
 
 ReadModels() {
   models := Array()
-	Loop, read, % modelsFile
+  Loop, read, % modelsFile
   {
-		if (!instr(A_LoopReadLine, "#") and Trim(A_LoopReadLine)) {
-			models.Push(A_LoopReadLine)
-		}
-	}
+    if (!instr(A_LoopReadLine, "#") and Trim(A_LoopReadLine)) {
+      models.Push(A_LoopReadLine)
+    }
+  }
   return %models%
 }
 
 GetCompleted() {
-  models := Object()
-	Loop, files, % imagesDir . "*.png" 
+  complete := Object()
+  Loop, files, % imagesDir . "*.png" 
   {
     SplitPath, A_LoopFileName,,,,name
-    models[name] := 1
-	}
-  return %models%
+    complete[name] := 1
+  }
+  return %complete%
 }
 
 ;Delete existing screens
@@ -59,6 +59,9 @@ Loop, % models.Length()
     }
 
     FileDelete, %hzdScreens%\*
-	  Sleep, 5000
+    complete[name] := 1
+
+    Process, WaitClose, HorizonZeroDawn.exe
+    Sleep, 1000
   }
 }

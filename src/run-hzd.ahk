@@ -5,10 +5,10 @@ hzdPath := "E:\Games\SteamLibrary\steamapps\common\Horizon Zero Dawn\HorizonZero
 SplitPath, hzdPath ,, hzdDir
 
 if (A_Args.Length() > 0) {
-	hzdPath := A_Args[1]
+  hzdPath := A_Args[1]
 }
 if (A_Args.Length() > 1) {
-	hzdDir := A_Args[2]
+  hzdDir := A_Args[2]
 }
 
 ;Start hzd
@@ -18,7 +18,7 @@ Run, %hzdPath%, %hzdDir%
 WinWait, ahk_exe HorizonZeroDawn.exe
 Sleep, 2000
 if (!WaitForImage("..\img\menu.png", 5000, foundX, foundY)) {
-	Exit, 1
+  Exit, 1
 }
 
 ;enter game
@@ -28,7 +28,7 @@ Send {Enter up}
 
 ;wait for load
 if (!WaitForImage("..\img\ingame.png", 60000, foundX, foundY)) {
-	Exit, 2
+  Exit, 2
 }
 ;wait for fade
 Sleep, 2000
@@ -40,8 +40,8 @@ Send {Space up}
 Sleep, 2000
 
 if (%0% < 2) {
-	msgbox, Finished run-hzd
-	Exit, 0
+  msgbox, Finished run-hzd
+  Exit, 0
 }
 
 ;game menu
@@ -52,10 +52,10 @@ Sleep, 100
 
 ;enter photo mode
 Loop, 3 {
-	Send {Down down}
-	Sleep, 50
-	Send {Down up}
-	Sleep, 100
+  Send {Down down}
+  Sleep, 50
+  Send {Down up}
+  Sleep, 100
 }
 
 Send {Enter down}

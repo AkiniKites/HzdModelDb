@@ -2,9 +2,9 @@
 #include common.ahk
 
 if (A_Args.Length() < 1 or !HasVal(A_Args, "-nowait")) {
-	;Wait for menu
-	WinWait, ahk_exe HorizonZeroDawn.exe
-	Sleep, 1000
+  ;Wait for menu
+  WinWait, ahk_exe HorizonZeroDawn.exe
+  Sleep, 1000
 }
 
 ResetPhotoMode() {
@@ -27,18 +27,33 @@ ResetPhotoMode() {
   Sleep, 500
 }
 
+ColorPanRight(r,g,b) {
+  return r < 40 and g < 40 and b < 40
+}
+ColorPanDown(r,g,b) {
+  ;FileAppend, % r . "," . g . "," . b . "`n", c.txt
+  return g < 30 and b < 30
+}
+
 PanToTarget() {
   Loop, 5 {
     ;pan camera
-    RelativeDrag(1000, 0, 1250)
+    RelativeDrag(1000, 0, 1210)
     Sleep, 50
-    if (!RelativeDragDark(1, 0, 5000, 2497, 473, 40)) {
+    panRight := func("ColorPanRight")
+    if (!RelativeDragColor(2, 0, 8000, 2497, 473, panRight)) {
       ResetPhotoMode()
       continue
     }
 
-    ;RelativeDrag(0, -50, 50)
+    RelativeDrag(0, -2, 1100)
     Sleep, 50
+    panDown := func("ColorPanDown")
+    if (!RelativeDragColor(0, -1, 20000, 2461, 671, panDown)) {
+      ResetPhotoMode()
+      continue
+    }
+
     return true
   }
 
@@ -46,7 +61,6 @@ PanToTarget() {
 }
 
 PanToTarget()
-exit
 
 ;lower camera
 send {LCtrl down}
@@ -60,7 +74,7 @@ Sleep, 50
 Send {e up}
 Sleep, 100
 
-if (HasVal(A_Args, "-dof")) {	
+if (HasVal(A_Args, "-dof")) {  
   ;dof on
   Click, down, 2301, 915
   sleep, 50
@@ -82,10 +96,10 @@ if (HasVal(A_Args, "-dof")) {
 
 ;goto time of day
 Loop, 2 {
-	Send {e down}
-	Sleep, 50
-	Send {e up}
-	Sleep, 100
+  Send {e down}
+  Sleep, 50
+  Send {e up}
+  Sleep, 100
 }
 
 ;click time of day 8:43
