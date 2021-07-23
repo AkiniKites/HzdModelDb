@@ -1,4 +1,4 @@
-#include Gdip_All.ahk
+#include lib\Gdip_All.ahk
 
 global MouseMoveSleep := 10
 
@@ -76,16 +76,16 @@ ScreenCapture(x,y,w,h,f) {
   Gdip_DisposeImage(snap)
 }
 
-SlowKey(key, ms:=50) {
+SlowKey(key, postDelay:=100, delay:=50) {
   Send {%key% down}
-  Sleep, %ms%
+  Sleep, %delay%
   Send {%key% up}
-  Sleep, 100
+  Sleep, %postDelay%
 }
 
-SlowClick(x, y, ms:=50) {
+SlowClick(x, y, postDelay:=100, delay:=50) {
   Click, down, %x%, %y%
-  Sleep, %ms%
+  Sleep, %delay%
   Click, up
-  Sleep, 100
+  Sleep, %postDelay%
 }

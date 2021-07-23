@@ -55,12 +55,13 @@ Loop, % models.Length()
     ;copy screen
     Loop, %hzdScreens%\* {
       FileCreateDir, ..\db
-      FileMove, %A_LoopFilePath%, % "..\db\" . name . ".png", 1
+      FileMove, %A_LoopFilePath%, % imagesDir . name . ".png", 1
     }
 
     FileDelete, %hzdScreens%\*
     complete[name] := 1
 
+    Process, Close, HorizonZeroDawn.exe
     Process, WaitClose, HorizonZeroDawn.exe
     Sleep, 1000
   }
