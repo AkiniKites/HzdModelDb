@@ -27,29 +27,35 @@ ResetPhotoMode() {
   Sleep, 500
 }
 
+global ii := 0
 ColorPanRight(r,g,b) {
-  return r < 40 and g < 40 and b < 40
+  ;ii++
+  ;FileAppend, % ii "-" r "," g "," b "`n", c.txt
+  ;ScreenCapture(1575-5,440-5,11,11, "debug\" ii ".png")
+  return r < 130 and g < 100 and b < 100
 }
 ColorPanDown(r,g,b) {
-  ;FileAppend, % r . "," . g . "," . b . "`n", c.txt
-  return g < 30 and b < 30
+  ;ii++
+  ;FileAppend, % ii "-" r "," g "," b "`n", c.txt
+  ;ScreenCapture(1575-5,440-5,11,11, "debug\" ii ".png")
+  return r < 160 and g < 100 and b < 100
 }
 
 PanToTarget() {
   Loop, 5 {
     ;pan camera
-    RelativeDrag(1000, 0, 1210)
+    RelativeDrag(-1000, 0, 1150)
     Sleep, 50
     panRight := func("ColorPanRight")
-    if (!RelativeDragColor(2, 0, 8000, 2497, 473, panRight)) {
+    if (!RelativeDragColor(1, 0, 15000, 1575, 440, panRight)) {
       ResetPhotoMode()
       continue
     }
 
-    RelativeDrag(0, -2, 1100)
+    RelativeDrag(0, -2, 2000)
     Sleep, 50
     panDown := func("ColorPanDown")
-    if (!RelativeDragColor(0, -1, 20000, 2461, 671, panDown)) {
+    if (!RelativeDragColor(0, -1, 5000, 1575, 682, panDown)) {
       ResetPhotoMode()
       continue
     }
@@ -60,13 +66,13 @@ PanToTarget() {
   return false
 }
 
-PanToTarget()
-
-;lower camera
-send {LCtrl down}
-Sleep, 200
-send {LCtrl up}
-Sleep, 100
+;goto pose
+Loop, 2 {
+  Click, down, 2301, 1232
+  sleep, 50
+  Click, up
+  Sleep, 200
+}
 
 ;goto dof
 Send {e down}
@@ -74,13 +80,39 @@ Sleep, 50
 Send {e up}
 Sleep, 100
 
-if (HasVal(A_Args, "-dof")) {  
-  ;dof on
-  Click, down, 2301, 915
-  sleep, 50
-  Click, up
-  Sleep, 100
+;dof off
+Click, down, 1872, 908
+sleep, 50
+Click, up
+Sleep, 100
 
+PanToTarget()
+
+;look at camera
+Send {c down}
+Sleep, 50
+Send {c up}
+Sleep, 100
+
+;look at camera off
+Send {c down}
+Sleep, 50
+Send {c up}
+Sleep, 100
+
+;lower camera
+send {LCtrl down}
+Sleep, 200
+send {LCtrl up}
+Sleep, 100
+
+;dof on
+Click, down, 2301, 915
+sleep, 50
+Click, up
+Sleep, 100
+
+if (HasVal(A_Args, "-dof")) {  
   ;4.1m focus
   Click, down, 1864, 981
   sleep, 50
@@ -103,19 +135,15 @@ Loop, 2 {
 }
 
 ;click time of day 8:43
-Click, down, 2016, 914
+Click, down, 1986, 920
 sleep, 50
 Click, up
-Sleep, 100
-
-;look at camera
-Send {c down}
-Sleep, 50
-Send {c up}
 Sleep, 100
 
 ;hide ui
 Send {r down}
 Sleep, 50
 Send {r up}
+Sleep, 100
+
 Sleep, 100

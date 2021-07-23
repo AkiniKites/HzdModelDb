@@ -2,7 +2,7 @@ SetWorkingDir %A_ScriptDir%
 #SingleInstance, Force
 
 global modelsFile := "..\data\models.txt"
-global imagesDir := "..\db\"
+global imagesDir := "..\db\raw\"
 hzdScreens := % A_MyDocuments . "\Horizon Zero Dawn\Screenshots"
 hzdPath := "E:\Games\SteamLibrary\steamapps\common\Horizon Zero Dawn\HorizonZeroDawn.exe"
 aaPath := "E:\Projects\AloysAdjustments\src\AloysAdjustments\bin\Debug\AloysAdjustments.exe"

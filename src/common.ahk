@@ -1,3 +1,4 @@
+#include Gdip_All.ahk
 
 global MouseMoveSleep := 10
 
@@ -66,4 +67,25 @@ HasVal(arr, val) {
     }
   }
   return 0
+}
+
+ScreenCapture(x,y,w,h,f) {
+  pToken := Gdip_Startup()
+  snap := Gdip_BitmapFromScreen( x "|" y "|" w "|" h )
+  Gdip_SaveBitmapToFile(snap, f)
+  Gdip_DisposeImage(snap)
+}
+
+SlowKey(key, ms:=50) {
+  Send {%key% down}
+  Sleep, %ms%
+  Send {%key% up}
+  Sleep, 100
+}
+
+SlowClick(x, y, ms:=50) {
+  Click, down, %x%, %y%
+  Sleep, %ms%
+  Click, up
+  Sleep, 100
 }
